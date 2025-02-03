@@ -9,4 +9,4 @@ Command Line Tools Installation Directory: C:\Program Files\PostgreSQL\17
 pgAdmin4 Installation Directory: C:\Program Files\PostgreSQL\17\pgAdmin 4
 Stack Builder Installation Directory: C:\Program Files\PostgreSQL\17
 Installation Log: C:\Users\Ice\AppData\Local\Temp\install-postgresql.log
-password 042545
+042545

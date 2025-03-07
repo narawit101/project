@@ -9,9 +9,9 @@ export default function ProtectedPage({ children }) {
     const token = document.cookie.includes("token") || localStorage.getItem("token");
 
     if (!token) {
-      router.push("/login"); // ✅ ถ้าไม่มี Token ให้ Redirect ไปหน้า Login
+      router.push("/login");
     }
   }, []);
 
-  return <div>{children}</div>; // ✅ แสดงเนื้อหาถ้ามี Token
+  return <div>{children}</div>; 
 }

@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 
 export default function UserList() {
-  const [users, setUsers] = useState([]);
 
+  const [users, setUsers] = useState([]);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/users");
+        const response = await fetch(`${API_URL}/users`);
         const data = await response.json();
         setUsers(data);
       } catch (error) {

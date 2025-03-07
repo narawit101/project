@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function Register() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter()
   const [formData, setFormData] = useState({
     user_name: '',
@@ -32,7 +33,6 @@ export default function Register() {
       [name]: value,
     });
 
-    // Clear field-specific errors when user inputs valid data
     if (value.trim() !== '') {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -67,7 +67,7 @@ export default function Register() {
     if (name === 'user_name' || name === 'email') {
       try {
         const response = await fetch(
-          `http://localhost:5000/register/check-duplicate?field=${name}&value=${value}`
+          `${API_URL}/register/check-duplicate?field=${name}&value=${value}`
         );
         const data = await response.json();
         if (data.isDuplicate) {
@@ -110,7 +110,7 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -233,7 +233,7 @@ export default function Register() {
 
         <p style={{ color: 'red' }}>{errors.passwordLength}</p>
 
-        <div>
+        {/* <div>
           <label htmlFor="role">บทบาท:</label>
           <select
             id="role"
@@ -244,7 +244,7 @@ export default function Register() {
             <option value="customer">ผู้ใช้</option>
             <option value="field_owner">เจ้าของสนาม</option>
           </select>
-        </div>
+        </div> */}
 
         <button type="submit">Register</button>
         <p style={{ color: 'red' }}>{errors.serverError}</p>

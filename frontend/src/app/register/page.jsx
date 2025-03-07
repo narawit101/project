@@ -9,7 +9,7 @@ export default function page() {
       
     </Register>
     <div>
-        <a href="/login">หรือคุณมีบัญชีอยู่แล้ว Login</a>
+        <a href="/login">หรือคุณมีบัญชีอยู่แล้ว Login เลย</a>
       </div>
     </>
   )

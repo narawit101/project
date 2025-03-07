@@ -3,12 +3,13 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [formData, setFormData] = useState({
-    identifier: "", // รองรับทั้ง username และ email
-    password: "", // รหัสผ่าน
+    identifier: "",
+    password: "", 
   });
 
-  const [message, setMessage] = useState(""); // ข้อความแจ้งเตือน
+  const [message, setMessage] = useState(""); 
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -20,13 +21,13 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: "include", // ส่ง cookies ไปด้วย
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -37,8 +38,8 @@ export default function Login() {
 
       const data = await response.json();
       setMessage(`ยินดีต้อนรับ, ${data.user.first_name}`);
-      localStorage.setItem("token", data.token); // เก็บ JWT ใน localStorage
-      router.push("/landing"); // รีไดเร็กไปหน้า landing
+      localStorage.setItem("token", data.token); 
+      router.push("/landing");
       console.log("User data:", data);
     } catch (error) {
       console.error("Error:", error);

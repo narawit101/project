@@ -50,6 +50,7 @@ router.post("/", async (req, res) => {
 
     res.status(200).json({
       message: "เข้าสู่ระบบสำเร็จ",
+      token,
       user: {
         user_name: user.user_name,
         first_name: user.first_name,
@@ -63,5 +64,6 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "เกิดข้อผิดพลาด", error: error.message });
   }
 });
+
 
 module.exports = router;

@@ -19,7 +19,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -29,24 +29,32 @@ export default function Login() {
         body: JSON.stringify(formData),
         credentials: "include",
       });
-
+  
+      const data = await response.json();
+      console.log("Login response data:", data); // ตรวจสอบค่าที่ได้จาก API
+  
       if (!response.ok) {
-        const errorData = await response.json();
-        setMessage(errorData.message || "เกิดข้อผิดพลาด");
+        setMessage(data.message || "เกิดข้อผิดพลาด");
         return;
       }
-
-      const data = await response.json();
-      setMessage(`ยินดีต้อนรับ, ${data.user.first_name}`);
-      localStorage.setItem("token", data.token); 
-      router.push("/landing");
-      console.log("User data:", data);
+  
+      // ✅ บันทึก token และ user ลง localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user)); // เก็บ user เป็น JSON
+        setMessage(`ยินดีต้อนรับ, ${data.user.first_name}`);
+        router.push("/");
+      } else {
+        console.error("Token is missing from response:", data);
+        setMessage("ไม่สามารถรับ Token ได้ โปรดลองอีกครั้ง");
+      }
     } catch (error) {
       console.error("Error:", error);
       setMessage("เกิดข้อผิดพลาดระหว่างเข้าสู่ระบบ");
     }
   };
-
+  
+  
   return (
     <div>
       <h2>เข้าสู่ระบบ</h2>
